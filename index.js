@@ -82,7 +82,7 @@ app.post('/getUser', async (req, res)=> {
 
 const storage = multer.diskStorage({
     destination: function (req,file,cb){
-        return cb(null, "../frontend/public/serverImg")
+        return cb(null, "../uploads")
     },
     filename: function (req,file,cb){
         return cb(null, `${uuid.v4()}_${Date.now()}_${file.originalname}`)
