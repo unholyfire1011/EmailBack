@@ -8,9 +8,13 @@ const multer = require('multer');
 const uuid = require('uuid');
 const crypto = require('crypto');
 const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
 
-          
-
+cloudinary.config({ 
+  cloud_name: 'dwx6cpsxg', 
+  api_key: '373737764535832', 
+  api_secret: 'NmoyX4rv9jCWQbFIZK8CP9FdyEk' 
+});
 
 require('dotenv').config()
 
@@ -100,7 +104,12 @@ app.post('/sendMsg', upload.single('file') ,async (req, res)=>{
     const to = req.body.to;
     const from = req.body.from;
     if(req.file){
-        File = req.file.filename;
+          try{
+            const result = await cloudinary.uploader.upload(req.file.path)
+            File = result.secure_url;
+        }catch(err){
+            res.status(201).send("Error sending message try again after sometime!!");
+          }
     }else{
         File = "";
     }
