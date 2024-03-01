@@ -99,9 +99,8 @@ app.post('/sendMsg', upload.single('file') ,async (req, res)=>{
     const date = new Date();
     const to = req.body.to;
     const from = req.body.from;
-    const url = req.file.filename;
     if(req.file){
-        File = url;
+        File = req.file.filename;
     }else{
         File = "";
     }
