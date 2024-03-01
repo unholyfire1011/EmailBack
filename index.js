@@ -342,16 +342,16 @@ app.post('/restoreBlocked', async(req,res)=>{
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'safe.mail101104@gmail.com',
-      pass: 'jhhp cnkb ntxd clyi'
+      user: 'purab.manglani@gmail.com',
+      pass: 'bksr iqab osna jeiu'
     }
   });
 
 app.post('/forgotPass', async (req,res)=>{
 
-    var fUrl = `http://localhost:5173/resetPass?userName=${req.body.username}`;
+    var fUrl = `https://emailsys.netlify.app/resetPass?userName=${req.body.username}`;
     var mailOptions = {
-        from: 'safe.mail101104@gmail.com',
+        from: 'purab.manglani@gmail.com',
         to: req.body.username,
         subject: 'Account Recovery',
         text: fUrl
