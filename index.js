@@ -9,12 +9,15 @@ const uuid = require('uuid');
 const crypto = require('crypto');
 const fs = require('fs');
 
+          
+
 
 require('dotenv').config()
 
 const app = express();
 app.use(cors())
 app.use(express.json())
+app.use('/', express.static('uploads'))
 
 
 mongoose.connect(process.env.URL).catch(err=> {
@@ -82,22 +85,23 @@ app.post('/getUser', async (req, res)=> {
 
 const storage = multer.diskStorage({
     destination: function (req,file,cb){
-        return cb(null, "../uploads")
+        return cb(null, "./uploads")
     },
     filename: function (req,file,cb){
-        return cb(null, `${uuid.v4()}_${Date.now()}_${file.originalname}`)
+        return cb(null, `${Date.now()}_${file.originalname}`)
     }
 })
 
 const upload = multer({storage})
 
-app.post('/sendMsg',upload.single('file'),async (req, res)=>{
+
+app.post('/sendMsg', upload.single('file') ,async (req, res)=>{
     const date = new Date();
     const to = req.body.to;
     const from = req.body.from;
-    var File = "";
+    const url = req.file.filename;
     if(req.file){
-        File = req.file.filename;
+        File = url;
     }else{
         File = "";
     }
